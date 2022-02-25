@@ -133,16 +133,28 @@ function draw()
         if (emotionArray) {
             noStroke();
             fill(0);
-            rect(width-125, 0, 150, 125);
+            rect(width-125, 0, 150, 150);
             fill(255);
             let x = width-100;
             let y = 0;
+
+            let maxEmotion = "";
+            let maxValue = 0;
+
             for (let i=0; i<4; i++)
             {
                 let em = emotionArray[i];
                 let value = em.value.toFixed(2);
                 text(em.emotion + " " + value, x, y+=25);
+
+                if (em.value > maxValue)
+                {
+                    maxEmotion = em.emotion;
+                    maxValue = em.value;
+                }
             }
+
+            text(maxEmotion, x, y+=25);
         }
     }
 }
