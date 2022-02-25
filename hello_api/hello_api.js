@@ -16,14 +16,7 @@ function draw()
 
     if (catimg)
     {
-        let w = 0, h = 0;
-
-        if (catdata.width > catdata.height)
-            w = width;
-        else
-            h = height;
-
-        image(catimg, 0, 0, w, h);
+        image(catimg, 0, 0, catdata.w, catdata.h);
     }
     else if (catimg === null)
     {
@@ -43,14 +36,19 @@ function mousePressed()
 
 function getRandomCatPic(data)
 {
-    catdata = data[0];
-    console.log(catdata);
+    console.log(data[0]);
 
-    catimg = createImg(catdata.url, "random cat image", null, () => {
+    catimg = createImg(data[0].url, "random cat image", null, () => {
         textAlign(CENTER);
-        console.log("Loaded: " + catdata.url);
+        console.log("Loaded: " + data[0].url);
         catimg.hide();
     });
 
+    catdata = {w:0, h:0};
+
+    if (data[0].width > data[0].height)
+        catdata.w = width;
+    else
+        catdata.h = height;
 }
 
