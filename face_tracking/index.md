@@ -8,6 +8,8 @@
 
 <main></main>
 
+<script src="emotion_classifier.js"></script>
+<script src="emotionmodel.js"></script>
 <script src="face_tracking.js"></script>
 
 

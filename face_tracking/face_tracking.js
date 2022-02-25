@@ -16,6 +16,8 @@ let showPoints = false;
 let showVideo = false;
 let showShapes = true;
 
+let ec;
+
 
 function setup() 
 {
@@ -38,7 +40,28 @@ function setup()
     tracker = new clm.tracker();
     tracker.init();
     tracker.start(capture.elt);
+
+    initializeEmotion();
 }
+
+
+function initializeEmotion()
+{
+    // from clmtracker example clm_emotiondetection.html
+
+    /*
+    // set eigenvector 9 and 11 to not be regularized. This is to better detect motion of the eyebrows
+    pModel.shapeModel.nonRegularizedVectors.push(9);
+    pModel.shapeModel.nonRegularizedVectors.push(11);
+    */
+
+    delete emotionModel['disgusted'];
+    delete emotionModel['fear'];
+
+    ec = new emotionClassifier();
+    ec.init(emotionModel);
+}
+
 
 
 function drawAllPoints(positions)
@@ -101,6 +124,27 @@ function draw()
 
     if (showShapes)
         drawShapes(positions);
+
+    if (ec)
+    {
+        let cp = tracker.getCurrentParameters();
+        let emotionArray = ec.meanPredict(cp);
+
+        if (emotionArray) {
+            noStroke();
+            fill(0);
+            rect(width-125, 0, 150, 125);
+            fill(255);
+            let x = width-100;
+            let y = 0;
+            for (let i=0; i<4; i++)
+            {
+                let em = emotionArray[i];
+                let value = em.value.toFixed(2);
+                text(em.emotion + " " + value, x, y+=25);
+            }
+        }
+    }
 }
 
 
