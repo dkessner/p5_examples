@@ -1,0 +1,42 @@
+
+
+body {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+#menu {
+    border-style: groove;
+    display: flex;
+    flex-direction: column;
+}
+
+
+a.menuitem {
+    border-style: solid;
+    width: 200px;
+    text-align: center;
+    margin: 10px;
+}
+
+a.menuitem:hover {
+    background-color: #eee;
+}
+
+
+#content {
+    margin: 20px;
+    padding: 30px;
+    border-style: dashed;
+}
+
+
+p {
+    background-color: #ccc;
+    width: 50%;
+}
+
+
+
