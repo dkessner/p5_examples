@@ -17,7 +17,8 @@ Hello, World!
 HTML
 
 ```html
-{% include p5.html %}
+<script src="p5.min.js"></script>
 <script src="hello.js"></script>
 ```
 
+[hello.zip (includes p5.min.js)](hello.zip)
