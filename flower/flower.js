@@ -36,7 +36,7 @@ function drawFlower(cx, cy, s, n, c) {
 
 
 function mousePressed() {
-    flowers.push(new Flower(this, mouseX, mouseY));
+    flowers.push(new Flower(mouseX, mouseY));
 }
 
 
@@ -50,14 +50,13 @@ function draw() {
 
 
 class Flower {
-    constructor(p, cx, cy) {
-        this.p = p;
+    constructor(cx, cy) {
         this.cx = cx;
         this.cy = cy;
-        this.s = p.random(.25, 1);
-        this.n = (int)(p.random(5, 10));
-        p.colorMode(p.HSB);
-        this.c = p.color(p.random(0, 100), random(0, 50), random(50, 100));
+        this.s = random(.25, 1);
+        this.n = (int)(random(5, 10));
+        colorMode(HSB);
+        this.c = color(random(0, 100), random(0, 50), random(50, 100));
     }
 
     display() {
