@@ -13,7 +13,7 @@ function setup() {
     for (let i=0; i<count; i++) {
         const x = width/count * (i + .5);
         const y = 100;
-        flowers.push(new Flower(x, y, width-x, height-y));
+        flowers.push(new Flower(x, y, width-x, height-y, String(i+1)));
     }
 }
 
@@ -50,32 +50,43 @@ function keyPressed() {
 function draw() {
     background(0);
 
-    for (let flower of flowers)
+    for (let flower of flowers) {
         flower.display();
+
+        if (flower.hover()) {
+            textSize(30);
+            fill(50, 100, 100, 1);
+            text(flower.description, width/2, height/2);
+        }
+    }
 }
 
 
 
 class Flower {
 
-    constructor(x1, y1, x2, y2) {
+    constructor(x1, y1, x2, y2, description) {
         this.position1 = createVector(x1, y1);
         this.position2 = createVector(x2, y2);
+        this.description = description;
+
         this.t = 0;
         this.speed = .005;
-        this.dt = this.speed;
+        this.dt = 0;
 
         this.s = random(.25, 1);
         this.n = (int)(random(5, 10));
-        colorMode(HSB);
-        this.c = color(random(0, 100), random(0, 50), random(50, 100));
+        colorMode(HSB, 100, 100, 100, 1);
+        this.c = color(random(0, 100), random(0, 50), random(50, 100), random(.5, 1));
         this.angleOffset = 0;
         this.angleSpeed = random(-.02, .02);
     }
 
     display() {
-        const position = p5.Vector.lerp(this.position1, this.position2, this.t);
-        drawFlower(position.x, position.y, this.s, this.n, this.c, this.angleOffset);
+
+        let c = this.hover() ? color(0, 100, 100, 1) : this.c;
+        const position = this.position();
+        drawFlower(position.x, position.y, this.s, this.n, c, this.angleOffset);
         this.angleOffset += this.angleSpeed;
 
         this.t += this.dt;
@@ -90,6 +101,10 @@ class Flower {
         }
     }
 
+    position() {
+        return p5.Vector.lerp(this.position1, this.position2, this.t);
+    }
+
     move() {
         if (this.dt == 0) {
             if (this.t == 1) 
@@ -97,6 +112,12 @@ class Flower {
             if (this.t == 0) 
                 this.dt = this.speed;
         }
+    }
+
+    hover() {
+        const radius = 150 * this.s;
+        const position = this.position();
+        return dist(mouseX, mouseY, position.x, position.y) < radius;
     }
 }
 
